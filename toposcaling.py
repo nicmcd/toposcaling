@@ -50,14 +50,14 @@ def fattree_size(radix, levels, data, idx):
     data[idx] = size
 
 def hyperx_size(radix, dimensions, data, idx):
-  cmd = ('~/dev/hyperxsearch/scripts/flat.py '
+  cmd = ('~/dev/hyperxsearch/scripts/hyperx_flat_search.py '
          '~/dev/hyperxsearch/bin/hyperxsearch '
          '{0} {0} {1} 0.5'.format(radix, dimensions))
   proc = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE)
   data[idx] = int(proc.stdout.decode('utf-8').split('\n')[1].split()[5])
 
 def dragonfly_size(radix, data, idx):
-  cmd = ('~/dev/hyperxsearch/scripts/hierarchical.py '
+  cmd = ('~/dev/hyperxsearch/scripts/hyperx_hierarchical_search.py '
          '~/dev/hyperxsearch/bin/hyperxsearch '
          '{0} {0} 1 1 0.5'.format(radix))
   proc = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE)
@@ -238,14 +238,14 @@ def main(args):
   mlp = ssplot.MultilinePlot(plt, list(radices), topo_sizes)
   mlp.set_data_labels(topo_names)
   mlp.set_xlabel('Router Radix')
-  mlp.set_ymin(2**8)
-  mlp.set_ymax(2**24 * 1.9)
+  #mlp.set_ymin(2**8)
+  #mlp.set_ymax(2**24 * 1.9)
   mlp.set_ylabel('Maximum Topology Size')
   mlp.set_yscale('log2')
   mlp.set_yticklabels_verbose(True)
   mlp.set_plot_style('inferno-markers')
-  mlp.set_figure_size('10x3.5')
-  mlp.set_legend_columns(4)
+  mlp.set_figure_size('10x6')
+  mlp.set_legend_columns(2)
   mlp.plot(args.plot)
 
   # crop the figure (i.e., remove margin whitespace)
